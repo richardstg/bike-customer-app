@@ -1,12 +1,10 @@
 import React from "react";
-import Payment from "../components/payment/payment";
-import Travels from "../components/travels/travels";
+import Bikes from "../components/bikes/bikes";
 
 const Home = (props) => {
   return (
     <>
-      <Travels />
-      <Payment />
+      <Bikes />
     </>
   );
 };
