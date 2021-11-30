@@ -6,6 +6,8 @@ import {
   Redirect,
 } from "react-router-dom";
 
+// import "leaflet/dist/leaflet.css";
+
 import Toolbar from "./components/toolbar/toolbar";
 import Home from "./pages/home";
 import Auth from "./pages/auth";
