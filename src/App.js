@@ -11,7 +11,7 @@ import {
 import Toolbar from "./components/toolbar/toolbar";
 import Home from "./pages/home";
 import Auth from "./pages/auth";
-import Map from "./pages/map";
+// import Map from "./pages/map";
 
 import { AuthContext } from "./context/authcontext";
 import { useAuth } from "./hooks/authhook";
@@ -47,7 +47,7 @@ const App = () => {
   const authorizedRoutes = (
     <Switch>
       <Route exact path="/" render={(props) => <Home user={user} />} />
-      <Route exact path="/map" render={(props) => <Map />} />
+      {/* <Route exact path="/map" render={(props) => <Map />} /> */}
       <Redirect to="/" />
     </Switch>
   );
