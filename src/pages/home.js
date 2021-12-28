@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
-// import Bikes from "../components/bikes/bikes";
+import { withRouter } from "react-router-dom";
+
 import Map from "../components/map/map";
+import RentBike from "../components/rentbike/rentbike";
+import SelectCity from "../components/selectcity/selectcity";
 
 const Home = (props) => {
-  const cityId = "61a7603dbb53f131584de9b3";
-
-  const [selectedCity, setSelectedCity] = useState(cityId);
+  const [selectedCity, setSelectedCity] = useState();
   const [selectedBike, setSelectedBike] = useState();
   const [city, setCity] = useState();
   const [cities, setCities] = useState();
   const [bikes, setBikes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [success, setSuccess] = useState();
+  const [success, setSuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const getBikes = async () => {
@@ -114,10 +114,15 @@ const Home = (props) => {
           //   Authorization: "Bearer " + token,
           // },
           body: JSON.stringify({
-            user_id: "XXXXX",
+            user_id: props.user._id,
             bike_id: selectedBike._id,
             start_coordinates: selectedBike.coordinates,
           }),
+          body: JSON.stringify([
+            { propName: "user_id", value: props.user._id },
+            { propName: "bike_id", value: selectedBike._id },
+            { propName: "start_coordinates", value: selectedBike.coordinates },
+          ]),
         }
       );
       const data = await response.json();
@@ -126,8 +131,10 @@ const Home = (props) => {
         throw new Error(data.message);
       }
       setSuccess(true);
+      props.history.push("/rent/" + data.startedTrip._id);
     } catch (error) {
       setError(error.message);
+      setSuccess(false);
     }
   };
 
@@ -148,30 +155,17 @@ const Home = (props) => {
     getBikes();
   }, [selectedCity]);
 
+  useEffect(() => {
+    props.user.city && setSelectedCity(props.user.city);
+  }, [props.user.city]);
+
   return (
     <>
-      <form>
-        <select
-          class="form-select"
-          aria-label="Available bikes"
-          onChange={(event) => setSelectedCity(event.target.value)}
-        >
-          {cities &&
-            cities.length > 0 &&
-            cities.map((city) => (
-              <option selected={selectedCity === city._id} value={city._id}>
-                {city.name}
-              </option>
-            ))}
-        </select>
-      </form>
-      {/* {bikes && bikes.length > 0 && (
-        <Bikes
-          bikes={bikes}
-          selected={selectedBike}
-          setSelected={setSelectedBike}
-        />
-      )} */}
+      <SelectCity
+        cities={cities}
+        selectedCity={selectedCity}
+        setSelectedCity={setSelectedCity}
+      />
       {city && bikes && bikes.length > 0 && (
         <Map
           city={city.coordinates}
@@ -181,27 +175,16 @@ const Home = (props) => {
           onClickBike={handleClickBike}
         />
       )}
-      <Modal
-        isOpen={showModal}
-        toggle={() => setShowModal((state) => !state)}
-        centered="true"
-        size="sm"
-      >
-        <ModalHeader>Hyr cykel {selectedBike}</ModalHeader>
-        <ModalBody>
-          <Button color="primary" onClick={() => rentBike(selectedBike)}>
-            Starta
-          </Button>{" "}
-          <Button
-            color="secondary"
-            onClick={() => setShowModal((state) => !state)}
-          >
-            Avbryt
-          </Button>
-        </ModalBody>
-      </Modal>
+      <RentBike
+        showModal={showModal}
+        setShowModal={setShowModal}
+        selectedBike={selectedBike}
+        rentBike={rentBike}
+        success={success}
+        error={error}
+      />
     </>
   );
 };
 
-export default Home;
+export default withRouter(Home);

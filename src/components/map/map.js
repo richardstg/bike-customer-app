@@ -80,7 +80,7 @@ const Map = (props) => {
                 ]}
                 icon={getIcon("bubble_charge", [15, 35], [1, -10])}
               >
-                <Popup>Charging station {loadingStation._id}</Popup>
+                <Popup>Laddstation {loadingStation._id}</Popup>
               </Marker>
             </>
           ))}
@@ -110,7 +110,7 @@ const Map = (props) => {
                 ]}
                 icon={getIcon("bubble_parking", [15, 35], [1, -10])}
               >
-                <Popup>Parking {parkingSpot._id}</Popup>
+                <Popup>Parkering {parkingSpot._id}</Popup>
               </Marker>
             </>
           ))}
