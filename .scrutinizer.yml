@@ -6,6 +6,7 @@ build:
       tests:
         override:
           - js-scrutinizer-run
-  tests:
-    override:
-      command: "npm test"
+          command: "npm test"
+  # tests:
+  #   override:
+  #     command: "npm test"
