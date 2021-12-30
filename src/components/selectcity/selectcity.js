@@ -6,14 +6,20 @@ const SelectCity = (props) => {
   return (
     <form>
       <select
-        class="form-select"
+        className="form-select"
         aria-label="Available bikes"
         onChange={(event) => setSelectedCity(event.target.value)}
+        value={selectedCity}
+        data-testid="select-city"
       >
         {cities &&
           cities.length > 0 &&
           cities.map((city) => (
-            <option selected={selectedCity === city._id} value={city._id}>
+            <option
+              key={city._id}
+              // selected={selectedCity === city._id}
+              value={city._id}
+            >
               {city.name}
             </option>
           ))}

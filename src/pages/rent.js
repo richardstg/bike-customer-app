@@ -76,7 +76,9 @@ const Rent = (props) => {
   return (
     <div>
       <h4>Pågående resa</h4>
-      <Button onClick={finishTrip}>Avsluta</Button>
+      <Button data-testid="finish-trip" onClick={finishTrip}>
+        Avsluta
+      </Button>
       {success && <p className="text-success">Resan avslutades.</p>}
       {error && <p className="text-danger">Avslutning misslyckades.</p>}
     </div>

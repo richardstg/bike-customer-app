@@ -19,6 +19,7 @@ const RentBike = (props) => {
           Starta
         </Button>{" "}
         <Button
+          data-testid="close-rent"
           color="secondary"
           onClick={() => setShowModal((state) => !state)}
         >
