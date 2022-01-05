@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import Map from "../components/map/map";
 import RentBike from "../components/rentbike/rentbike";
@@ -11,118 +12,38 @@ const Home = (props) => {
   const [city, setCity] = useState();
   const [cities, setCities] = useState();
   const [bikes, setBikes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [rentLoading, setRentLoading] = useState(false);
+  const [rentError, setRentError] = useState(false);
+  const [cityLoading, setCityLoading] = useState(false);
+  const [cityError, setCityError] = useState(false);
+  const [citiesLoading, setCitiesLoading] = useState(false);
+  const [citiesError, setCitiesError] = useState(false);
+  const [bikesLoading, setBikesLoading] = useState(false);
+  const [bikesError, setBikesError] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const getBikes = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/bikes/city/${selectedCity}`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            // Authorization: "Bearer " + context.token,
-          },
-          // body: JSON.stringify({ name, content, code: codeMode }),
-        }
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-      setBikes(data.bikes);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  const getCities = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/cities`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            // Authorization: "Bearer " + context.token,
-          },
-          // body: JSON.stringify({ name, content, code: codeMode }),
-        }
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-      setCities(data.cities);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  const getCity = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/cities/${selectedCity}`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            // Authorization: "Bearer " + context.token,
-          },
-          // body: JSON.stringify({ name, content, code: codeMode }),
-        }
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-      setCity(data.city);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
   const rentBike = async () => {
-    setSuccess(false);
+    setRentError(false);
+    setRentLoading(true);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/trips`,
         {
           method: "POST",
-          // headers: {
-          //   Authorization: "Bearer " + token,
-          // },
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            // Authorization: "Bearer " + context.token,
+          },
           body: JSON.stringify({
             user_id: props.user._id,
             bike_id: selectedBike._id,
-            start_coordinates: selectedBike.coordinates,
           }),
-          body: JSON.stringify([
-            { propName: "user_id", value: props.user._id },
-            { propName: "bike_id", value: selectedBike._id },
-            { propName: "start_coordinates", value: selectedBike.coordinates },
-          ]),
+          // body: JSON.stringify([
+          //   { propName: "user_id", value: props.user._id },
+          //   { propName: "bike_id", value: selectedBike._id },
+          //   { propName: "start_coordinates", value: selectedBike.coordinates },
+          // ]),
         }
       );
       const data = await response.json();
@@ -130,33 +51,117 @@ const Home = (props) => {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      setSuccess(true);
+      setRentLoading(false);
       props.history.push("/rent/" + data.startedTrip._id);
     } catch (error) {
-      setError(error.message);
-      setSuccess(false);
+      setRentLoading(false);
+      setRentError(true);
     }
   };
+  console.log(selectedBike);
 
-  const handleClickBike = (bikeId) => {
-    setSelectedBike(bikeId);
+  const handleClickBike = (bike) => {
+    setSelectedBike(bike);
     setShowModal(true);
   };
 
   useEffect(() => {
+    const getCities = async () => {
+      setCitiesError(false);
+      setCitiesLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/cities`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              // Authorization: "Bearer " + context.token,
+            },
+            // body: JSON.stringify({ name, content, code: codeMode }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+        setCities(data.cities);
+        setCitiesLoading(false);
+      } catch (err) {
+        setCitiesError(true);
+        setCitiesLoading(false);
+      }
+    };
     getCities();
   }, []);
 
   useEffect(() => {
-    getCity();
+    const getBikes = async () => {
+      setBikesError(false);
+      setBikesLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/bikes/city/${selectedCity}`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              // Authorization: "Bearer " + context.token,
+            },
+            // body: JSON.stringify({ name, content, code: codeMode }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+        setBikes(data.bikes);
+        setBikesLoading(false);
+      } catch (err) {
+        setBikesError(true);
+        setBikesLoading(false);
+      }
+    };
+    const getCity = async () => {
+      setCityError(false);
+      setCityLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/cities/${selectedCity}`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              // Authorization: "Bearer " + context.token,
+            },
+            // body: JSON.stringify({ name, content, code: codeMode }),
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+        setCity(data.city);
+        setCityLoading(false);
+      } catch (err) {
+        setCityError(true);
+        setCityLoading(false);
+      }
+    };
+
+    selectedCity && getBikes() && getCity();
   }, [selectedCity]);
 
   useEffect(() => {
-    getBikes();
-  }, [selectedCity]);
-
-  useEffect(() => {
-    props.user.city && setSelectedCity(props.user.city);
+    props.user.city === "unknown"
+      ? setSelectedCity("61a7603dbb53f131584de9b3")
+      : setSelectedCity(props.user.city);
   }, [props.user.city]);
 
   return (
@@ -166,6 +171,16 @@ const Home = (props) => {
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
       />
+      <ClipLoader
+        color={"#fffff"}
+        loading={cityLoading || citiesLoading || bikesLoading}
+        // css={override}
+        size={40}
+      />
+      {!(cityLoading || citiesLoading || bikesLoading) &&
+        (cityError || citiesError || bikesError) && (
+          <p className="text-danger">Ett fel uppstod. Försök igen senare.</p>
+        )}
       {city && bikes && bikes.length > 0 && (
         <Map
           city={city.coordinates}
@@ -180,8 +195,9 @@ const Home = (props) => {
         setShowModal={setShowModal}
         selectedBike={selectedBike}
         rentBike={rentBike}
-        success={success}
-        error={error}
+        error={rentError}
+        loading={rentLoading}
+        user={props.user}
       />
     </>
   );

@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useAuth } from "./hooks/authhook";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import Toolbar from "./components/toolbar/toolbar";
 import Home from "./pages/home";
@@ -14,14 +15,13 @@ import Rent from "./pages/rent";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
-
-  // const uId = "619f6ee3d0b6c914a2b58514";
-
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState();
   const [userError, setUserError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
           `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
@@ -38,8 +38,10 @@ const App = () => {
           throw new Error(data.message);
         }
         setUser(data.user);
+        setLoading(false);
       } catch (error) {
         setUserError(error.message);
+        setLoading(false);
       }
     };
     userId && fetchData();
@@ -65,10 +67,20 @@ const App = () => {
   );
 
   return (
-    <div className="App container pb-5">
+    <div className="App min-vh-100">
       <Router>
         <Toolbar logout={logout} isAuthenticated={!!token} />
-        {token ? authorizedRoutes : unauthorizedRoutes}
+        <div className="container">
+          {userError && (
+            <p className="text-danger mt-2">
+              Hämtningen av användare misslyckades. Försök igen senare.
+            </p>
+          )}
+          <ClipLoader color={"#fffff"} loading={loading} size={40} />
+          {token && user && authorizedRoutes}
+          {token && !user && ""}
+          {!token && unauthorizedRoutes}
+        </div>
       </Router>
     </div>
   );

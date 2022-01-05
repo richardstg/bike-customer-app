@@ -4,8 +4,6 @@ import { GoogleLogin } from "react-google-login";
 const Auth = (props) => {
   const { login } = props;
   const [error, setError] = useState();
-  const [loading, setLoading] = useState();
-  const [success, setSuccess] = useState();
 
   const responseGoogleSuccess = async (response) => {
     try {
@@ -23,28 +21,33 @@ const Auth = (props) => {
       if (!res.ok) {
         throw new Error(data.message);
       }
-      setSuccess(true);
-      setLoading(false);
       login(data.userId, data.userEmail, data.token);
     } catch (err) {
       setError(err.message);
-      setLoading(false);
     }
   };
   const responseGoogleError = (response) => {
-    // console.log(response);
     setError(response.message);
   };
 
   return (
-    <GoogleLogin
-      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-      buttonText="Logga in"
-      onSuccess={responseGoogleSuccess}
-      onFailure={responseGoogleError}
-      cookiePolicy={"single_host_origin"}
-      isSignedIn={false}
-    />
+    <div
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ minHeight: "70vh" }}
+    >
+      <div>
+        <h1 className="color-signature font-signature text-center">seab.</h1>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Logga in med Google"
+          onSuccess={responseGoogleSuccess}
+          onFailure={responseGoogleError}
+          cookiePolicy={"single_host_origin"}
+          isSignedIn={false}
+        />
+        {error && <p className="text-danger mt-2">{error}</p>}
+      </div>
+    </div>
   );
 };
 

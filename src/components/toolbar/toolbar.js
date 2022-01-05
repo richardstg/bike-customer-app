@@ -1,27 +1,23 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Toolbar = (props) => {
   const { isAuthenticated, logout } = props;
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light p-4 text-decoration-none">
-      {isAuthenticated && (
-        <>
-          {/* <Link to="/" className="text-decoration-none">
-            <span className="m-3 text-dark text-decoration-none">Home</span>
-          </Link>
-          <Link to="/texts" className="text-decoration-none">
-            <span className="m-3 text-dark">Texts</span>
-          </Link>
-          <Link to="/about" className="text-decoration-none">
-            <span className="m-3 text-dark">About</span>
-          </Link> */}
-          <button className="btn btn-secondary" onClick={logout}>
+    <nav className="navbar navbar-expand-lg p-2 text-decoration-none mb-3 shadow-sm">
+      <div className="d-flex justify-content-between w-100 container">
+        <Link to="/" className="text-decoration-none align-middle d-flex">
+          <h4 className="text-decoration-none p-2 mb-0 color-signature font-signature">
+            seab.
+          </h4>
+        </Link>
+        {isAuthenticated && (
+          <button className="button-3" onClick={logout}>
             Logga ut
           </button>
-        </>
-      )}
+        )}
+      </div>
     </nav>
   );
 };

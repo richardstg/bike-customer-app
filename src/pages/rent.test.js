@@ -13,9 +13,7 @@ it("tests that the title is rendered", async () => {
 
 it("tests that the success message does not show", async () => {
   render(<Rent match={{ params: { tripId: "1" } }} />);
-  expect(
-    await screen.queryByText(/Resan avslutades./i)
-  ).not.toBeInTheDocument();
+  expect(await screen.queryByText(/Avslutad resa/i)).not.toBeInTheDocument();
 });
 
 it("tests that the error message does not show", async () => {

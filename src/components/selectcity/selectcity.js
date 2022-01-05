@@ -4,7 +4,7 @@ const SelectCity = (props) => {
   const { cities, selectedCity, setSelectedCity } = props;
 
   return (
-    <form>
+    <form className="mb-2">
       <select
         className="form-select"
         aria-label="Available bikes"

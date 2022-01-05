@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import React, { useState, useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -12,7 +11,6 @@ import {
 import L from "leaflet";
 
 const fillBlueOptions = { fillColor: "blue" };
-let defaultCenter = [59.505, 18];
 
 function getIcon(markerImg, iconAnchor, popupAnchor) {
   return L.icon({
@@ -41,11 +39,15 @@ const LocationMarker = (props) => {
 
 const Map = (props) => {
   const { city, loadingStations, parkingSpots, bikes, onClickBike } = props;
+  // console.log(bikes);
+  // console.log(bikes[0]);
+  // console.log()
+  // bikes.map((bike) => console.log(bike));
 
   return (
     <>
       <MapContainer
-        style={{ height: "75vh", width: "100%" }}
+        style={{ height: "80vh", width: "100%" }}
         center={[city.northwest.lat, city.northwest.long]}
         zoom={13}
         scrollWheelZoom={false}
@@ -80,7 +82,7 @@ const Map = (props) => {
                 ]}
                 icon={getIcon("bubble_charge", [15, 35], [1, -10])}
               >
-                <Popup>Charging station {loadingStation._id}</Popup>
+                <Popup>Laddstation</Popup>
               </Marker>
             </>
           ))}
@@ -110,22 +112,31 @@ const Map = (props) => {
                 ]}
                 icon={getIcon("bubble_parking", [15, 35], [1, -10])}
               >
-                <Popup>Parking {parkingSpot._id}</Popup>
+                <Popup>Parkering</Popup>
               </Marker>
             </>
           ))}
         {bikes &&
           bikes.length > 0 &&
-          bikes.map((bike) => (
-            <Marker
-              position={[bike.coordinates.lat, bike.coordinates.long]}
-              icon={getIcon("marker_scooter", [15, 15], [0, 0])}
-            >
-              <Popup>
-                <button onClick={() => onClickBike(bike._id)}>Hyr</button>
-              </Popup>
-            </Marker>
-          ))}
+          bikes
+            .filter((bike) => bike.bike_status === "available")
+            .map((bike) => (
+              <Marker
+                position={[bike.coordinates.lat, bike.coordinates.long]}
+                icon={getIcon("marker_scooter", [15, 15], [0, 0])}
+              >
+                <Popup>
+                  <button
+                    className="button-3"
+                    onClick={() => {
+                      onClickBike(bike);
+                    }}
+                  >
+                    Hyr
+                  </button>
+                </Popup>
+              </Marker>
+            ))}
         <Rectangle
           bounds={[
             [city.northwest.lat, city.northwest.long],
