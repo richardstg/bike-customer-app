@@ -165,7 +165,7 @@ const Rent = (props) => {
     <div>
       <h5 className="color-signature font-signature mb-3">Pågående resa</h5>
       {trip && (
-        <p>
+        <p className="fw-bold">
           Resan påbörjades{" "}
           {new Date(trip.start_time).toLocaleString("sv-SE", {
             dateStyle: "short",
@@ -182,10 +182,12 @@ const Rent = (props) => {
             // strokeColor="#D3D3D3"
           /> */}
           <Progress
-            // type="circle"
+            type="circle"
             percent={bike.battery_status}
             status={barStatus(bike.battery_status)}
-            strokeWidth={10}
+            // strokeWidth={10}
+            style={{ fontSize: "4rem" }}
+            width="100%"
             theme={{
               error: {
                 symbol: bike.battery_status + "%",
