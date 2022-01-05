@@ -36,7 +36,9 @@ const Auth = (props) => {
       style={{ minHeight: "70vh" }}
     >
       <div>
-        <h1 className="color-signature font-signature text-center">seab.</h1>
+        <h1 className="color-signature font-signature text-center font-logo">
+          seab.
+        </h1>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           buttonText="Logga in med Google"

@@ -165,7 +165,7 @@ const Rent = (props) => {
     <div>
       <h5 className="color-signature font-signature mb-3">Pågående resa</h5>
       {trip && (
-        <p className="fw-bold">
+        <p className="fw-bold mb-3">
           Resan påbörjades{" "}
           {new Date(trip.start_time).toLocaleString("sv-SE", {
             dateStyle: "short",
@@ -214,7 +214,7 @@ const Rent = (props) => {
         </div>
       )}
       <button
-        className="button-3 full-width"
+        className="button-3 full-width mt-4"
         data-testid="finish-trip"
         onClick={finishTrip}
       >
