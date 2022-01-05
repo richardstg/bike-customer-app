@@ -155,7 +155,7 @@ const Rent = (props) => {
           </tbody>
         </table>
         <Link to="/">
-          <button className="button-3">Tillbaka</button>
+          <button className="button-3 full-width">Tillbaka</button>
         </Link>
       </div>
     );
@@ -212,7 +212,7 @@ const Rent = (props) => {
         </div>
       )}
       <button
-        className="button-3"
+        className="button-3 full-width"
         data-testid="finish-trip"
         onClick={finishTrip}
       >

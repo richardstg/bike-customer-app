@@ -259,3 +259,9 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: #298e46;
   box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
+
+@media(max-width: 768px) {
+  button.full-width {
+      width: 100%;  
+  }
+}
