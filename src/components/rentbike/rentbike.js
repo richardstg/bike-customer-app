@@ -1,7 +1,7 @@
 import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 const RentBike = (props) => {
   const {
@@ -23,8 +23,6 @@ const RentBike = (props) => {
     }
     return false;
   };
-
-  console.log(selectedBike);
 
   return (
     <Modal

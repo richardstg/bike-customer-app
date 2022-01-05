@@ -39,10 +39,6 @@ const LocationMarker = (props) => {
 
 const Map = (props) => {
   const { city, loadingStations, parkingSpots, bikes, onClickBike } = props;
-  // console.log(bikes);
-  // console.log(bikes[0]);
-  // console.log()
-  // bikes.map((bike) => console.log(bike));
 
   return (
     <>

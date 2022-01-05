@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 // import { Line, Circle } from "rc-progress";
 import { Progress } from "react-sweet-progress";

@@ -58,7 +58,6 @@ const Home = (props) => {
       setRentError(true);
     }
   };
-  console.log(selectedBike);
 
   const handleClickBike = (bike) => {
     setSelectedBike(bike);
