@@ -1,7 +1,7 @@
 import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 
 const RentBike = (props) => {
   const {
@@ -35,27 +35,33 @@ const RentBike = (props) => {
         Hyr cykel?
       </ModalHeader>
       <ModalBody>
-        <button
-          className="button-3"
-          onClick={() => rentBike(selectedBike)}
-          disabled={!isAllowed()}
-        >
-          Starta{" "}
-          <ClipLoader
-            color={"#fffff"}
-            loading={loading}
-            // css={override}
-            size={20}
-          />
-        </button>{" "}
-        <button
-          className="button-4"
-          data-testid="close-rent"
-          color="secondary"
-          onClick={() => setShowModal((state) => !state)}
-        >
-          Avbryt
-        </button>
+        <Row>
+          <Col>
+            <button
+              className="button-3 w-100"
+              onClick={() => rentBike(selectedBike)}
+              disabled={!isAllowed()}
+            >
+              Starta{" "}
+              <ClipLoader
+                color={"#fffff"}
+                loading={loading}
+                // css={override}
+                size={20}
+              />
+            </button>
+          </Col>
+          <Col>
+            <button
+              className="button-4 w-100"
+              data-testid="close-rent"
+              color="secondary"
+              onClick={() => setShowModal((state) => !state)}
+            >
+              Avbryt
+            </button>
+          </Col>
+        </Row>
         {!isAllowed() && (
           <p className="text-danger mt-2">
             Fyll på pengar eller ändra betalningsmetod för att hyra.
