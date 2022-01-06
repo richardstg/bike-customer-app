@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import PropTypes from "prop-types";
 import Map from "../components/map/map";
 import RentBike from "../components/rentbike/rentbike";
 import SelectCity from "../components/selectcity/selectcity";
@@ -33,17 +33,12 @@ const Home = (props) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            // Authorization: "Bearer " + context.token,
+            headers: { "x-access-token": props.token },
           },
           body: JSON.stringify({
             user_id: props.user._id,
             bike_id: selectedBike._id,
           }),
-          // body: JSON.stringify([
-          //   { propName: "user_id", value: props.user._id },
-          //   { propName: "bike_id", value: selectedBike._id },
-          //   { propName: "start_coordinates", value: selectedBike.coordinates },
-          // ]),
         }
       );
       const data = await response.json();
@@ -76,9 +71,8 @@ const Home = (props) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              // Authorization: "Bearer " + context.token,
+              headers: { "x-access-token": props.token },
             },
-            // body: JSON.stringify({ name, content, code: codeMode }),
           }
         );
         const data = await response.json();
@@ -108,9 +102,8 @@ const Home = (props) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              // Authorization: "Bearer " + context.token,
+              headers: { "x-access-token": props.token },
             },
-            // body: JSON.stringify({ name, content, code: codeMode }),
           }
         );
         const data = await response.json();
@@ -136,9 +129,8 @@ const Home = (props) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              // Authorization: "Bearer " + context.token,
+              headers: { "x-access-token": props.token },
             },
-            // body: JSON.stringify({ name, content, code: codeMode }),
           }
         );
         const data = await response.json();
@@ -200,6 +192,54 @@ const Home = (props) => {
       />
     </>
   );
+};
+
+Home.propTypes = {
+  user: {
+    _id: PropTypes.string,
+    city: {
+      coordinates: {
+        northwest: {
+          lat: PropTypes.string,
+          long: PropTypes.string,
+        },
+        southeast: {
+          lat: PropTypes.string,
+          long: PropTypes.string,
+        },
+      },
+      parkingSpots: [
+        {
+          coordinates: {
+            northwest: {
+              lat: PropTypes.string,
+              long: PropTypes.string,
+            },
+            southeast: {
+              lat: PropTypes.string,
+              long: PropTypes.string,
+            },
+          },
+        },
+      ],
+      loadingStations: [
+        {
+          coordinates: {
+            northwest: {
+              lat: PropTypes.string,
+              long: PropTypes.string,
+            },
+            southeast: {
+              lat: PropTypes.string,
+              long: PropTypes.string,
+            },
+          },
+        },
+      ],
+    },
+  },
+  history: { push: PropTypes.func },
+  token: PropTypes.string,
 };
 
 export default withRouter(Home);

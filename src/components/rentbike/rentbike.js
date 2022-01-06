@@ -1,6 +1,6 @@
 import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import PropTypes from "prop-types";
 import { Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 
 const RentBike = (props) => {
@@ -43,13 +43,7 @@ const RentBike = (props) => {
               onClick={() => rentBike(selectedBike)}
               disabled={!isAllowed(user)}
             >
-              Starta{" "}
-              <ClipLoader
-                color={"#fffff"}
-                loading={loading}
-                // css={override}
-                size={20}
-              />
+              Starta <ClipLoader color={"#fffff"} loading={loading} size={20} />
             </button>
           </Col>
           <Col>
@@ -72,6 +66,16 @@ const RentBike = (props) => {
       </ModalBody>
     </Modal>
   );
+};
+
+RentBike.propTypes = {
+  showModal: PropTypes.bool,
+  setShowModal: PropTypes.func,
+  selectedBike: PropTypes.string,
+  rentBike: PropTypes.func,
+  error: PropTypes.bool,
+  loading: PropTypes.bool,
+  user: { payment_method: PropTypes.string, balance: PropTypes.string },
 };
 
 export default RentBike;

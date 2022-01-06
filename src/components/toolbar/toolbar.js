@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const Toolbar = (props) => {
   const { isAuthenticated, logout } = props;
@@ -20,6 +21,11 @@ const Toolbar = (props) => {
       </div>
     </nav>
   );
+};
+
+Toolbar.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  logout: PropTypes.func,
 };
 
 export default Toolbar;

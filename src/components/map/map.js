@@ -9,6 +9,7 @@ import {
   Rectangle,
 } from "react-leaflet";
 import L from "leaflet";
+import PropTypes from "prop-types";
 
 const fillBlueOptions = { fillColor: "blue" };
 
@@ -118,6 +119,7 @@ const Map = (props) => {
             .filter((bike) => bike.bike_status === "available")
             .map((bike) => (
               <Marker
+                key={bike._id}
                 position={[bike.coordinates.lat, bike.coordinates.long]}
                 icon={getIcon("marker_scooter", [15, 15], [0, 0])}
               >
@@ -149,6 +151,71 @@ const Map = (props) => {
       </MapContainer>
     </>
   );
+};
+
+Map.propTypes = {
+  bikes: [
+    {
+      _id: PropTypes.string,
+      bike_status: PropTypes.string,
+      coordinates: {
+        lat: PropTypes.string,
+        long: PropTypes.string,
+      },
+    },
+  ],
+  city: {
+    northwest: {
+      lat: PropTypes.string,
+      long: PropTypes.string,
+    },
+    southeast: {
+      lat: PropTypes.string,
+      long: PropTypes.string,
+    },
+  },
+  loadingStations: [
+    {
+      coordinates: {
+        northwest: {
+          lat: PropTypes.string,
+          long: PropTypes.string,
+        },
+        southeast: {
+          lat: PropTypes.string,
+          long: PropTypes.string,
+        },
+      },
+    },
+  ],
+  parkingSpots: [
+    {
+      coordinates: {
+        northwest: {
+          lat: PropTypes.string,
+          long: PropTypes.string,
+        },
+        southeast: {
+          lat: PropTypes.string,
+          long: PropTypes.string,
+        },
+      },
+    },
+  ],
+  onClickBike: PropTypes.func,
+};
+
+LocationMarker.propTypes = {
+  city: {
+    northwest: {
+      lat: PropTypes.string,
+      long: PropTypes.string,
+    },
+    southeast: {
+      lat: PropTypes.string,
+      long: PropTypes.string,
+    },
+  },
 };
 
 export default Map;

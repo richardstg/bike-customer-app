@@ -27,9 +27,7 @@ const App = () => {
           `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
           {
             method: "GET",
-            // headers: {
-            //   Authorization: "Bearer " + token,
-            // },
+            headers: { "x-access-token": token },
           }
         );
         const data = await response.json();
@@ -52,16 +50,16 @@ const App = () => {
       <Route
         exact
         path="/rent/:tripId"
-        component={(props) => <Rent {...props} userId={userId} />}
+        component={(props) => <Rent {...props} userId={userId} token={token} />}
       />
-      <Route exact path="/" render={(props) => <Home user={user} />} />
+      <Route exact path="/" render={() => <Home user={user} token={token} />} />
       <Redirect to="/" />
     </Switch>
   );
 
   const unauthorizedRoutes = (
     <Switch>
-      <Route path="/" exact render={(props) => <Auth login={login} />} />
+      <Route path="/" exact render={() => <Auth login={login} />} />
       <Redirect to="/" />
     </Switch>
   );

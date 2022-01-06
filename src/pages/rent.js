@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
+import PropTypes from "prop-types";
+import RentTable from "../components/renttable/renttable";
 
 let bikeInterval;
 
@@ -21,9 +23,7 @@ const Rent = (props) => {
         `${process.env.REACT_APP_BACKEND_URL}/trips/end/${props.match.params.tripId}`,
         {
           method: "PATCH",
-          // headers: {
-          //   Authorization: "Bearer " + token,
-          // },
+          headers: { "x-access-token": props.token },
         }
       );
       const data = await response.json();
@@ -34,7 +34,6 @@ const Rent = (props) => {
       setFinished(true);
       setLoading(false);
       setTrip(data.trip);
-      // setTimeout(() => props.history.push("/" + data.trip._id), 1000);
     } catch (error) {
       setLoading(false);
       setError(true);
@@ -49,9 +48,7 @@ const Rent = (props) => {
           `${process.env.REACT_APP_BACKEND_URL}/bikes/${bikeId}`,
           {
             method: "GET",
-            // headers: {
-            //   Authorization: "Bearer " + token,
-            // },
+            headers: { "x-access-token": props.token },
           }
         );
         const data = await response.json();
@@ -70,9 +67,7 @@ const Rent = (props) => {
           `${process.env.REACT_APP_BACKEND_URL}/trips/${props.match.params.tripId}`,
           {
             method: "GET",
-            // headers: {
-            //   Authorization: "Bearer " + token,
-            // },
+            headers: { "x-access-token": props.token },
           }
         );
         const data = await response.json();
@@ -173,6 +168,11 @@ const Rent = (props) => {
       {error && <p className="text-danger mt-2">Avslutning misslyckades.</p>}
     </div>
   );
+};
+
+Rent.propTypes = {
+  match: { params: { tripId: PropTypes.string } },
+  token: PropTypes.string,
 };
 
 export default Rent;

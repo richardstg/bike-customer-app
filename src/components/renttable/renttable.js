@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const RentTable = (props) => {
@@ -57,6 +57,17 @@ const RentTable = (props) => {
       </Link>
     </div>
   );
+};
+
+RentTable.propTypes = {
+  trip: {
+    bike_id: PropTypes.string,
+    start_time: PropTypes.string,
+    stop_time: PropTypes.string,
+    distance: PropTypes.string,
+    price: PropTypes.string,
+    average_speed: PropTypes.string,
+  },
 };
 
 export default RentTable;

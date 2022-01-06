@@ -4,17 +4,11 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^29.2.0",
-    "@ckeditor/ckeditor5-react": "^3.0.2",
-    "@codemirror/lang-javascript": "^0.19.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.1.10",
-    "@uiw/react-codemirror": "^4.1.0",
-    "file-saver": "^2.0.5",
     "history": "^5.0.1",
     "leaflet": "^1.7.1",
-    "rc-progress": "^3.2.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
@@ -33,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -45,5 +40,13 @@
     ">0.2%",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-react": "^7.27.1"
+  }
 }

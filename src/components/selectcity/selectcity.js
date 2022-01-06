@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const SelectCity = (props) => {
   const { cities, selectedCity, setSelectedCity } = props;
@@ -26,6 +27,17 @@ const SelectCity = (props) => {
       </select>
     </form>
   );
+};
+
+SelectCity.propTypes = {
+  cities: [
+    {
+      _id: PropTypes.string,
+      name: PropTypes.string,
+    },
+  ],
+  selectedCity: PropTypes.string,
+  setSelectedCity: PropTypes.func,
 };
 
 export default SelectCity;
