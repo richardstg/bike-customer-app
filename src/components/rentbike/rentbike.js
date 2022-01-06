@@ -14,10 +14,10 @@ const RentBike = (props) => {
     user,
   } = props;
 
-  const isAllowed = () => {
+  const isAllowed = (user) => {
     if (
-      user.payment_method === "monthly" ||
-      (user.payment_method === "refill" && user.balance > 0)
+      (user && user.payment_method === "monthly") ||
+      (user && user.payment_method === "refill" && user.balance > 0)
     ) {
       return true;
     }
@@ -39,8 +39,9 @@ const RentBike = (props) => {
           <Col>
             <button
               className="button-3 w-100"
+              data-testid="rent-bike"
               onClick={() => rentBike(selectedBike)}
-              disabled={!isAllowed()}
+              disabled={!isAllowed(user)}
             >
               Starta{" "}
               <ClipLoader
@@ -62,7 +63,7 @@ const RentBike = (props) => {
             </button>
           </Col>
         </Row>
-        {!isAllowed() && (
+        {!isAllowed(user) && (
           <p className="text-danger mt-2">
             Fyll på pengar eller ändra betalningsmetod för att hyra.
           </p>
