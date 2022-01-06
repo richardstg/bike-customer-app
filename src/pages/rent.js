@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-// import { Line, Circle } from "rc-progress";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 
@@ -35,7 +33,7 @@ const Rent = (props) => {
       }
       setFinished(true);
       setLoading(false);
-      // setTrip(data.trip);
+      setTrip(data.trip);
       // setTimeout(() => props.history.push("/" + data.trip._id), 1000);
     } catch (error) {
       setLoading(false);
@@ -107,58 +105,7 @@ const Rent = (props) => {
   };
 
   if (finished) {
-    return (
-      <div>
-        <h5 className="font-signature color-signature">Avslutad resa</h5>
-        <table className="table" style={{ fontSize: "0.9rem" }}>
-          <tbody>
-            <tr>
-              <th scope="col" className="font-signature color-signature">
-                Starttid
-              </th>
-              <td>
-                {new Date(trip.start_time).toLocaleString("sv-SE", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
-              </td>
-            </tr>
-            <tr>
-              <th scope="col" className="font-signature color-signature">
-                Sluttid
-              </th>
-              <td>
-                {new Date(trip.stop_time).toLocaleString("sv-SE", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                })}
-              </td>
-            </tr>
-            <tr>
-              <th scope="col" className="font-signature color-signature">
-                Genomsnittlig hastighet
-              </th>
-              <td>{trip.average_speed} km/h</td>
-            </tr>
-            <tr>
-              <th scope="col" className="font-signature color-signature">
-                Distans
-              </th>
-              <td>{trip.distance} km</td>
-            </tr>
-            <tr>
-              <th scope="col" className="font-signature color-signature">
-                Kostnad
-              </th>
-              <td>{trip.price} SEK</td>
-            </tr>
-          </tbody>
-        </table>
-        <Link to="/">
-          <button className="button-3 full-width">Tillbaka</button>
-        </Link>
-      </div>
-    );
+    <RentTable trip={trip} />;
   }
 
   return (
