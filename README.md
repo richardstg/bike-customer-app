@@ -46,3 +46,5 @@ A view with information about the trip. Battery and starting time is displayed w
 ## Available tasks
 
 Rent an available scooter by clicking on it on the map.
+
+Finish the trip and see details about the trip.
