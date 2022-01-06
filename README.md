@@ -19,8 +19,11 @@ Your system needs git, npm, node.js.
 To install:
 
 Clone the repo with git clone https://github.com/xlsson/pattern-admin
+
 Run npm install to install the app and its dependencies.
+
 Create a .env file in the root folder, with the following content:
+
 REACT_APP_BACKEND_URL=http://localhost:1337/v1
 
 REACT_APP_GOOGLE_CLIENT_ID=needs to be created!
