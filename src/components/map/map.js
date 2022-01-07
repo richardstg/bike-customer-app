@@ -31,6 +31,7 @@ const LocationMarker = (props) => {
       setPosition(e.latlng);
       map.flyTo(props.city, 13);
     });
+    return () => setPosition(null);
   }, [map, props.city]);
 
   return position === null ? null : (

@@ -34,7 +34,6 @@ const Rent = (props) => {
       setFinished(true);
       setLoading(false);
       setTrip(data.endedTrip);
-      console.log(data.endedTrip);
     } catch (error) {
       setLoading(false);
       setError(true);
