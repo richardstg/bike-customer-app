@@ -74,7 +74,7 @@ const App = () => {
               Hämtningen av användare misslyckades. Försök igen senare.
             </p>
           )}
-          <ClipLoader color={"#fffff"} loading={loading} size={40} />
+          <ClipLoader color={"#298E46"} loading={loading} size={40} />
           {token && user && authorizedRoutes}
           {token && !user && ""}
           {!token && unauthorizedRoutes}

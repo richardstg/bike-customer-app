@@ -4,20 +4,17 @@ import PropTypes from "prop-types";
 import { Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 
 const RentBike = (props) => {
-  const {
-    showModal,
-    setShowModal,
-    selectedBike,
-    rentBike,
-    error,
-    loading,
-    user,
-  } = props;
+  const { showModal, setShowModal, rentBike, error, loading, user } = props;
 
   const isAllowed = (user) => {
     if (
-      (user && user.payment_method === "monthly") ||
-      (user && user.payment_method === "refill" && user.balance > 0)
+      (user &&
+        user.payment_method === "monthly" &&
+        user.card_information !== "unknown") ||
+      (user &&
+        user.payment_method === "refill" &&
+        user.balance > 0 &&
+        user.card_information !== "unknown")
     ) {
       return true;
     }
@@ -40,7 +37,7 @@ const RentBike = (props) => {
             <button
               className="button-3 w-100"
               data-testid="rent-bike"
-              onClick={() => rentBike(selectedBike)}
+              onClick={() => rentBike()}
               disabled={!isAllowed(user)}
             >
               Starta <ClipLoader color={"#fffff"} loading={loading} size={20} />
@@ -71,11 +68,10 @@ const RentBike = (props) => {
 RentBike.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
-  selectedBike: PropTypes.string,
   rentBike: PropTypes.func,
   error: PropTypes.bool,
   loading: PropTypes.bool,
-  user: { payment_method: PropTypes.string, balance: PropTypes.string },
+  user: PropTypes.object,
 };
 
 export default RentBike;

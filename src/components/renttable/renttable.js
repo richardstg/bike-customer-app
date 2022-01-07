@@ -60,14 +60,7 @@ const RentTable = (props) => {
 };
 
 RentTable.propTypes = {
-  trip: {
-    bike_id: PropTypes.string,
-    start_time: PropTypes.string,
-    stop_time: PropTypes.string,
-    distance: PropTypes.string,
-    price: PropTypes.string,
-    average_speed: PropTypes.string,
-  },
+  trip: PropTypes.object,
 };
 
 export default RentTable;

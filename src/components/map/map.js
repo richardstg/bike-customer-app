@@ -58,6 +58,7 @@ const Map = (props) => {
           loadingStations.map((loadingStation) => (
             <>
               <Rectangle
+                key={loadingStation._id}
                 bounds={[
                   [
                     loadingStation.coordinates.northwest.lat,
@@ -71,6 +72,7 @@ const Map = (props) => {
                 pathOptions={{ color: "green" }}
               />
               <Marker
+                key={loadingStation._id + "2"}
                 position={[
                   loadingStation.coordinates.northwest.lat,
                   (loadingStation.coordinates.northwest.long +
@@ -88,6 +90,7 @@ const Map = (props) => {
           parkingSpots.map((parkingSpot) => (
             <>
               <Rectangle
+                key={parkingSpot._id}
                 bounds={[
                   [
                     parkingSpot.coordinates.northwest.lat,
@@ -101,6 +104,7 @@ const Map = (props) => {
                 pathOptions={{ color: "blue" }}
               />
               <Marker
+                key={parkingSpot._id + "2"}
                 position={[
                   parkingSpot.coordinates.northwest.lat,
                   (parkingSpot.coordinates.northwest.long +
@@ -154,68 +158,15 @@ const Map = (props) => {
 };
 
 Map.propTypes = {
-  bikes: [
-    {
-      _id: PropTypes.string,
-      bike_status: PropTypes.string,
-      coordinates: {
-        lat: PropTypes.string,
-        long: PropTypes.string,
-      },
-    },
-  ],
-  city: {
-    northwest: {
-      lat: PropTypes.string,
-      long: PropTypes.string,
-    },
-    southeast: {
-      lat: PropTypes.string,
-      long: PropTypes.string,
-    },
-  },
-  loadingStations: [
-    {
-      coordinates: {
-        northwest: {
-          lat: PropTypes.string,
-          long: PropTypes.string,
-        },
-        southeast: {
-          lat: PropTypes.string,
-          long: PropTypes.string,
-        },
-      },
-    },
-  ],
-  parkingSpots: [
-    {
-      coordinates: {
-        northwest: {
-          lat: PropTypes.string,
-          long: PropTypes.string,
-        },
-        southeast: {
-          lat: PropTypes.string,
-          long: PropTypes.string,
-        },
-      },
-    },
-  ],
+  bikes: PropTypes.array,
+  city: PropTypes.object,
+  loadingStations: PropTypes.array,
+  parkingSpots: PropTypes.array,
   onClickBike: PropTypes.func,
 };
 
 LocationMarker.propTypes = {
-  city: {
-    northwest: {
-      lat: PropTypes.string,
-      long: PropTypes.string,
-    },
-    southeast: {
-      lat: PropTypes.string,
-      long: PropTypes.string,
-    },
-  },
+  city: PropTypes.array,
 };
 
 export default Map;

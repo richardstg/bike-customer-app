@@ -33,7 +33,8 @@ const Rent = (props) => {
       }
       setFinished(true);
       setLoading(false);
-      setTrip(data.trip);
+      setTrip(data.endedTrip);
+      console.log(data.endedTrip);
     } catch (error) {
       setLoading(false);
       setError(true);
@@ -100,7 +101,7 @@ const Rent = (props) => {
   };
 
   if (finished) {
-    <RentTable trip={trip} />;
+    return <RentTable trip={trip} />;
   }
 
   return (
@@ -171,7 +172,7 @@ const Rent = (props) => {
 };
 
 Rent.propTypes = {
-  match: { params: { tripId: PropTypes.string } },
+  match: PropTypes.object,
   token: PropTypes.string,
 };
 

@@ -150,7 +150,7 @@ const Home = (props) => {
   }, [selectedCity]);
 
   useEffect(() => {
-    props.user.city === "unknown"
+    !props.user.city
       ? setSelectedCity("61a7603dbb53f131584de9b3")
       : setSelectedCity(props.user.city);
   }, [props.user.city]);
@@ -163,9 +163,8 @@ const Home = (props) => {
         setSelectedCity={setSelectedCity}
       />
       <ClipLoader
-        color={"#fffff"}
+        color={"#298E46"}
         loading={cityLoading || citiesLoading || bikesLoading}
-        // css={override}
         size={40}
       />
       {!(cityLoading || citiesLoading || bikesLoading) &&
@@ -195,50 +194,8 @@ const Home = (props) => {
 };
 
 Home.propTypes = {
-  user: {
-    _id: PropTypes.string,
-    city: {
-      coordinates: {
-        northwest: {
-          lat: PropTypes.string,
-          long: PropTypes.string,
-        },
-        southeast: {
-          lat: PropTypes.string,
-          long: PropTypes.string,
-        },
-      },
-      parkingSpots: [
-        {
-          coordinates: {
-            northwest: {
-              lat: PropTypes.string,
-              long: PropTypes.string,
-            },
-            southeast: {
-              lat: PropTypes.string,
-              long: PropTypes.string,
-            },
-          },
-        },
-      ],
-      loadingStations: [
-        {
-          coordinates: {
-            northwest: {
-              lat: PropTypes.string,
-              long: PropTypes.string,
-            },
-            southeast: {
-              lat: PropTypes.string,
-              long: PropTypes.string,
-            },
-          },
-        },
-      ],
-    },
-  },
-  history: { push: PropTypes.func },
+  user: PropTypes.object,
+  history: PropTypes.object,
   token: PropTypes.string,
 };
 

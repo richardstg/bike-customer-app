@@ -16,11 +16,7 @@ const SelectCity = (props) => {
         {cities &&
           cities.length > 0 &&
           cities.map((city) => (
-            <option
-              key={city._id}
-              // selected={selectedCity === city._id}
-              value={city._id}
-            >
+            <option key={city._id} value={city._id}>
               {city.name}
             </option>
           ))}
@@ -30,12 +26,7 @@ const SelectCity = (props) => {
 };
 
 SelectCity.propTypes = {
-  cities: [
-    {
-      _id: PropTypes.string,
-      name: PropTypes.string,
-    },
-  ],
+  cities: PropTypes.array,
   selectedCity: PropTypes.string,
   setSelectedCity: PropTypes.func,
 };
