@@ -7,7 +7,7 @@ import RentBike from "../components/rentbike/rentbike";
 import SelectCity from "../components/selectcity/selectcity";
 
 const Home = (props) => {
-  const [selectedCity, setSelectedCity] = useState();
+  const [selectedCity, setSelectedCity] = useState("");
   const [selectedBike, setSelectedBike] = useState();
   const [city, setCity] = useState();
   const [cities, setCities] = useState();
@@ -150,9 +150,9 @@ const Home = (props) => {
   }, [selectedCity]);
 
   useEffect(() => {
-    !props.user.city
+    !props.user.city._id
       ? setSelectedCity("61a7603dbb53f131584de9b3")
-      : setSelectedCity(props.user.city);
+      : setSelectedCity(props.user.city._id);
   }, [props.user.city]);
 
   return (
