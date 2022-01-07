@@ -45,6 +45,6 @@ A view with information about the trip. Battery and starting time is displayed w
 
 ## Available tasks
 
-Rent an available scooter by clicking on it on the map.
+Rent an available scooter by clicking on it on the map. In order to do this you also need to open the [bike program](https://github.com/freddyph/pattern-bikeprogram) and input the user and bike id.
 
 Finish the trip and see details about the trip.
