@@ -77,7 +77,7 @@ const Rent = (props) => {
         }
         setTrip(data.trip);
         fetchBike(data.trip.bike_id);
-        bikeInterval = setInterval(() => fetchBike(data.trip.bike_id), 30000);
+        bikeInterval = setInterval(() => fetchBike(data.trip.bike_id), 5000);
       } catch (error) {
         setError(true);
       }
@@ -118,11 +118,6 @@ const Rent = (props) => {
       {bike && (
         <div className="mb-3">
           <h6 className="color-signature font-signature mb-3">Batteri</h6>
-          {/* <Circle
-            percent={bike.battery_status}
-            strokeWidth="4"
-            // strokeColor="#D3D3D3"
-          /> */}
           <Progress
             type="circle"
             percent={bike.battery_status}
@@ -132,22 +127,22 @@ const Rent = (props) => {
             width="100%"
             theme={{
               error: {
-                symbol: bike.battery_status + "%",
+                symbol: parseInt(bike.battery_status) + "%",
                 trailColor: "pink",
                 color: "red",
               },
               default: {
-                symbol: bike.battery_status + "%",
+                symbol: parseInt(bike.battery_status) + "%",
                 trailColor: "lightblue",
                 color: "blue",
               },
               active: {
-                symbol: bike.battery_status + "%",
+                symbol: parseInt(bike.battery_status) + "%",
                 trailColor: "yellow",
                 color: "orange",
               },
               success: {
-                symbol: bike.battery_status + "%",
+                symbol: parseInt(bike.battery_status) + "%",
                 trailColor: "lime",
                 color: "green",
               },

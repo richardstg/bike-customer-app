@@ -36,13 +36,13 @@ const RentTable = (props) => {
             <th scope="col" className="font-signature color-signature">
               Genomsnittlig hastighet
             </th>
-            <td>{trip.average_speed} km/h</td>
+            <td>{parseInt(trip.average_speed)} km/h</td>
           </tr>
           <tr>
             <th scope="col" className="font-signature color-signature">
               Distans
             </th>
-            <td>{trip.distance} km</td>
+            <td>{trip.distance} m</td>
           </tr>
           <tr>
             <th scope="col" className="font-signature color-signature">

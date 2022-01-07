@@ -180,15 +180,17 @@ const Home = (props) => {
           onClickBike={handleClickBike}
         />
       )}
-      <RentBike
-        showModal={showModal}
-        setShowModal={setShowModal}
-        selectedBike={selectedBike}
-        rentBike={rentBike}
-        error={rentError}
-        loading={rentLoading}
-        user={props.user}
-      />
+      {selectedBike && (
+        <RentBike
+          showModal={showModal}
+          setShowModal={setShowModal}
+          bike={selectedBike}
+          rentBike={rentBike}
+          error={rentError}
+          loading={rentLoading}
+          user={props.user}
+        />
+      )}
     </>
   );
 };
