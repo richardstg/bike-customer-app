@@ -59,7 +59,7 @@ const RentBike = (props) => {
           </table>
         </div>
         <span className="mb-0 font-italic" style={{ fontStyle: "italic" }}>
-          Skriv in i cykelns program.
+          Ange i cykelns program och starta.
         </span>
         {!isAllowed(user) && (
           <p className="text-danger mt-2">
