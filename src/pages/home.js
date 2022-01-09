@@ -33,7 +33,7 @@ const Home = (props) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            headers: { "x-access-token": props.token },
+            "x-access-token": props.token,
           },
           body: JSON.stringify({
             user_id: props.user._id,
@@ -71,7 +71,7 @@ const Home = (props) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              headers: { "x-access-token": props.token },
+              "x-access-token": props.token,
             },
           }
         );
@@ -102,7 +102,7 @@ const Home = (props) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              headers: { "x-access-token": props.token },
+              "x-access-token": props.token,
             },
           }
         );
@@ -129,7 +129,7 @@ const Home = (props) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              headers: { "x-access-token": props.token },
+              "x-access-token": props.token,
             },
           }
         );
