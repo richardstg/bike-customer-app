@@ -150,9 +150,9 @@ const Home = (props) => {
   }, [selectedCity]);
 
   useEffect(() => {
-    !props.user.city._id
+    !props.user.city
       ? setSelectedCity("61a7603dbb53f131584de9b3")
-      : setSelectedCity(props.user.city._id);
+      : setSelectedCity(props.user.city);
   }, [props.user.city]);
 
   return (
