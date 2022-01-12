@@ -21,7 +21,7 @@ const RentBike = (props) => {
         user.card_information !== "unknown") ||
       (user &&
         user.payment_method === "refill" &&
-        user.balance > 10 &&
+        user.balance > 63 &&
         user.card_information !== "unknown")
     ) {
       return true;
