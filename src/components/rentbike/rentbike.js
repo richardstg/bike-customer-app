@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import PropTypes from "prop-types";
 import {
@@ -11,8 +11,39 @@ import {
 } from "reactstrap";
 
 const RentBike = (props) => {
-  const { showModal, setShowModal, rentBike, error, loading, user, bike } =
-    props;
+  const [trip, setTrip] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const { showModal, setShowModal, user, bike, token, history } = props;
+
+  const getTrip = async (tripId) => {
+    setError(false);
+    if (!trip) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/trips/${tripId}`,
+        {
+          method: "GET",
+          headers: {
+            "x-access-token": token,
+          },
+        }
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error();
+      }
+      setLoading(false);
+      history.push("/rent/" + data.trip._id);
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+    }
+  };
 
   const isAllowed = (user) => {
     if (
@@ -21,7 +52,7 @@ const RentBike = (props) => {
         user.card_information !== "unknown") ||
       (user &&
         user.payment_method === "refill" &&
-        user.balance > 63 &&
+        user.balance >= 63 &&
         user.card_information !== "unknown")
     ) {
       return true;
@@ -40,6 +71,12 @@ const RentBike = (props) => {
         Hyr cykel?
       </ModalHeader>
       <ModalBody>
+        <p
+          className="mb-1 font-italic font-signature color-signature"
+          style={{ fontStyle: "italic", fontSize: "0.8rem" }}
+        >
+          Ange i cykelns program:
+        </p>
         <div className="table-wrapper">
           <table className="table" style={{ fontSize: "0.9rem" }}>
             <tbody>
@@ -58,15 +95,33 @@ const RentBike = (props) => {
             </tbody>
           </table>
         </div>
-        <span className="mb-0 font-italic" style={{ fontStyle: "italic" }}>
-          Ange i cykelns program och starta resan där först.
-        </span>
-        {!isAllowed(user) && (
+        {isAllowed(user) ? (
+          <>
+            <p
+              className="mb-1 font-italic font-signature color-signature"
+              style={{
+                fontStyle: "italic",
+                fontSize: "0.8rem",
+              }}
+            >
+              Ange id:t för resan som returnerats från cykelns program:
+            </p>
+            <input
+              required
+              className="w-100 form-control"
+              onChange={(event) => setTrip(event.target.value)}
+            />
+          </>
+        ) : (
           <p className="text-danger mt-2">
             Fyll på pengar eller ändra betalningsmetod för att hyra.
           </p>
         )}
-        {error && <p className="text-danger mt-2">Hyrningen misslyckades.</p>}
+        {error && (
+          <p className="text-danger mt-2">
+            Hyrningen misslyckades. Kontrollera rese-id.
+          </p>
+        )}
       </ModalBody>
       <ModalFooter>
         <Row>
@@ -74,7 +129,7 @@ const RentBike = (props) => {
             <button
               className="button-3 w-100"
               data-testid="rent-bike"
-              onClick={() => rentBike()}
+              onClick={() => getTrip(trip)}
               disabled={!isAllowed(user)}
             >
               Starta <ClipLoader color={"#fffff"} loading={loading} size={20} />
@@ -99,11 +154,10 @@ const RentBike = (props) => {
 RentBike.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
-  rentBike: PropTypes.func,
-  error: PropTypes.bool,
-  loading: PropTypes.bool,
   user: PropTypes.object,
   bike: PropTypes.object,
+  token: PropTypes.string,
+  history: PropTypes.object,
 };
 
 export default RentBike;

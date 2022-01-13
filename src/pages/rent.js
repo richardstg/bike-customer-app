@@ -11,6 +11,7 @@ const Rent = (props) => {
   const [trip, setTrip] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [finishedError, setFinishedError] = useState(false);
   const [finished, setFinished] = useState(false);
   const [bike, setBike] = useState();
   const [bikeError, setBikeError] = useState();
@@ -18,25 +19,26 @@ const Rent = (props) => {
   const finishTrip = async () => {
     setLoading(true);
     setFinished(false);
+    setFinishedError(false);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/trips/end/${props.match.params.tripId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/trips/${props.match.params.tripId}`,
         {
-          method: "PATCH",
+          method: "GET",
           headers: { "x-access-token": props.token },
         }
       );
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message);
+      if (!response.ok || !data.trip.stop_time) {
+        throw new Error();
       }
       setFinished(true);
       setLoading(false);
-      setTrip(data.endedTrip);
+      setTrip(data.trip);
     } catch (error) {
       setLoading(false);
-      setError(true);
+      setFinishedError(true);
     }
   };
 
@@ -107,7 +109,7 @@ const Rent = (props) => {
     <div>
       <h5 className="color-signature font-signature mb-3">Pågående resa</h5>
       {trip && (
-        <p className="fw-bold mb-3">
+        <p className="mb-3">
           Resan påbörjades{" "}
           {new Date(trip.start_time).toLocaleString("sv-SE", {
             dateStyle: "short",
@@ -123,7 +125,7 @@ const Rent = (props) => {
             percent={bike.battery_status}
             status={barStatus(bike.battery_status)}
             // strokeWidth={10}
-            style={{ fontSize: "4rem" }}
+            style={{ fontSize: "3.2rem" }}
             width="100%"
             theme={{
               error: {
@@ -160,7 +162,15 @@ const Rent = (props) => {
       {bikeError && (
         <p className="text-danger mt-2">Hämtning av cykeldata misslyckades.</p>
       )}
-      {error && <p className="text-danger mt-2">Avslutning misslyckades.</p>}
+      {finishedError && (
+        <p className="text-danger mt-2">
+          Avslutning misslyckades. Kontrollera att resan avslutats i cykelns
+          program.
+        </p>
+      )}
+      {error && (
+        <p className="text-danger mt-2">Info om resan kunde ej hämtas.</p>
+      )}
     </div>
   );
 };

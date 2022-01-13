@@ -12,8 +12,6 @@ const Home = (props) => {
   const [city, setCity] = useState();
   const [cities, setCities] = useState();
   const [bikes, setBikes] = useState([]);
-  const [rentLoading, setRentLoading] = useState(false);
-  const [rentError, setRentError] = useState(false);
   const [cityLoading, setCityLoading] = useState(false);
   const [cityError, setCityError] = useState(false);
   const [citiesLoading, setCitiesLoading] = useState(false);
@@ -21,38 +19,6 @@ const Home = (props) => {
   const [bikesLoading, setBikesLoading] = useState(false);
   const [bikesError, setBikesError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const rentBike = async () => {
-    setRentError(false);
-    setRentLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/trips`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "x-access-token": props.token,
-          },
-          body: JSON.stringify({
-            user_id: props.user._id,
-            bike_id: selectedBike._id,
-          }),
-        }
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-      setRentLoading(false);
-      props.history.push("/rent/" + data.startedTrip._id);
-    } catch (error) {
-      setRentLoading(false);
-      setRentError(true);
-    }
-  };
 
   const handleClickBike = (bike) => {
     setSelectedBike(bike);
@@ -185,10 +151,9 @@ const Home = (props) => {
           showModal={showModal}
           setShowModal={setShowModal}
           bike={selectedBike}
-          rentBike={rentBike}
-          error={rentError}
-          loading={rentLoading}
           user={props.user}
+          token={props.token}
+          history={props.history}
         />
       )}
     </>
