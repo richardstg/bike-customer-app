@@ -22,10 +22,7 @@ it("tests that the select city component is rendered", async () => {
             payment_method: "refill",
             balance: 100,
             card_information: "1234555555555",
-            city: {
-              _id: "2335235",
-              name: "Stockholm",
-            },
+            city: "2335235",
           }}
         />
       </Route>

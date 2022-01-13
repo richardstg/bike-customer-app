@@ -7,9 +7,10 @@ import RentBike from "./rentbike";
 afterEach(cleanup);
 
 const user = {
+  _id: "666",
   payment_method: "refill",
   card_information: "222222222222",
-  balance: 50,
+  balance: 150,
 };
 
 const bike = {
@@ -63,9 +64,12 @@ it("tests that renting fails when there is no payment method", async () => {
   ).toBeInTheDocument();
 });
 
-it("tests that the error message is rendered", async () => {
-  render(<RentBike user={user} bike={bike} showModal={true} error={true} />);
-  expect(
-    await screen.findByText(/Hyrningen misslyckades./i)
-  ).toBeInTheDocument();
+it("tests that the user id is rendered", async () => {
+  render(<RentBike user={user} bike={bike} showModal={true} />);
+  expect(await screen.findByText(/666/i)).toBeInTheDocument();
+});
+
+it("tests that the bike id is rendered", async () => {
+  render(<RentBike user={user} bike={bike} showModal={true} />);
+  expect(await screen.findByText(/123124123/i)).toBeInTheDocument();
 });
