@@ -32,7 +32,7 @@ it("tests that the title is rendered", async () => {
   expect(await screen.findByText(/Hyr cykel?/i)).toBeInTheDocument();
 });
 
-it("tests that renting fails when there is no balance", async () => {
+it("tests that the error message is displayed when price cannot be fetched", async () => {
   render(
     <RentBike
       user={{ payment_method: "refill", balance: 0 }}
@@ -42,9 +42,7 @@ it("tests that renting fails when there is no balance", async () => {
   );
 
   expect(
-    await screen.findByText(
-      /Fyll på pengar eller ändra betalningsmetod för att hyra./i
-    )
+    await screen.findByText(/Det inträffade ett fel. Försök igen senare./i)
   ).toBeInTheDocument();
 });
 
