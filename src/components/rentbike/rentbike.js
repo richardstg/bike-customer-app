@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import PropTypes from "prop-types";
 import {
@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 
 const RentBike = (props) => {
+  const [price, setPrice] = useState(null);
   const [trip, setTrip] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -52,13 +53,44 @@ const RentBike = (props) => {
         user.card_information !== "unknown") ||
       (user &&
         user.payment_method === "refill" &&
-        user.balance >= 63 &&
+        user.balance >= price &&
         user.card_information !== "unknown")
     ) {
       return true;
     }
     return false;
   };
+
+  useEffect(() => {
+    const getPrice = async () => {
+      setError(false);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/prices`,
+          {
+            method: "GET",
+            headers: {
+              "x-access-token": token,
+            },
+          }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error();
+        }
+
+        setPrice(
+          data.prices[0].starting_fee +
+            data.prices[0].price_per_minute +
+            data.prices[0].penalty_fee
+        );
+      } catch (error) {
+        setError(true);
+      }
+    };
+    getPrice();
+  }, [token]);
 
   return (
     <Modal
@@ -119,7 +151,7 @@ const RentBike = (props) => {
         )}
         {error && (
           <p className="text-danger mt-2">
-            Hyrningen misslyckades. Kontrollera rese-id.
+            Det inträffade ett fel. Försök igen senare.
           </p>
         )}
       </ModalBody>
